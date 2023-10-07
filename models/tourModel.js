@@ -8,7 +8,7 @@ const tourSchema = new mongoose.Schema({
   category: {
     type: String,
     required: [true, 'A tour must have a category'],
-    enum: ['religious', 'mountain', 'museums', 'sport-related', 'animal-life'],
+    enum: ['religious', 'mountain', 'museums', 'sport-related', 'animal-life']
   },
   description: {
     type: String,
