@@ -1,5 +1,6 @@
 const express = require('express');
 require('dotenv').config({ path: './config.env' });
+const cookieParser = require('cookie-parser'); // Require the cookie-parser middleware
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
 const helmet = require('helmet');
@@ -41,6 +42,9 @@ app.use(mongoSanitize());
 
 // Data sanitization against XSS
 app.use(xss());
+
+// Cookie parsing middleware
+app.use(cookieParser()); // Add this line to parse cookies
 
 // Prevent parameter pollution
 app.use(
