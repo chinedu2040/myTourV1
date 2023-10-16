@@ -6,26 +6,33 @@ const router = express.Router();
 // Define routes for CRUD operations (Create, Read, Update, Delete)
 router
   .route('/')
-  .get(tourController.getAllTours)
-  .post(
+  .get(
     authController.protect,
-    authController.restrictTo('admin'),
+    authController.restrictTo('user'),
+    tourController.getAllTours)
+  .post(
     tourController.createTour
     );
 
 router
+// protect this route and restrict it to both user and admin
   .route('/:id')
-  .get(tourController.getTourById)
+  .get(
+    authController.protect,
+    authController.restrictTo('user'),
+    tourController.getTourById)
 
   .patch(
-    authController.protect,
-    authController.restrictTo('admin'),
     tourController.updateTour
     )
     
 // Get suggested tours based on category
 router
+// protect this route and restrict it to both user and admin
 .route('/suggested/:categoryId')
-.get(tourController.getSuggestedTours);
+.get(
+  authController.protect,
+  authController.restrictTo('user'),
+  tourController.getSuggestedTours);
 
 module.exports = router;
