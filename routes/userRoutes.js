@@ -4,7 +4,10 @@ const authController = require('./../controllers/authController');
 
 const router = express.Router();
 
+// Unprotected route accessible to everyone
 router.post('/signup', authController.signup);
+
+// Protected routes
 router.post('/login', authController.login);
 router.get('/logout', authController.logout);
 
