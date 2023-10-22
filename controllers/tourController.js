@@ -155,3 +155,39 @@ exports.getSuggestedTours = async (req, res) => {
   }
 };
 
+// In tourController.js
+
+exports.searchTours = async (req, res) => {
+  try {
+    const { name, category } = req.query;
+
+    // Create a query object to filter tours
+    const query = {};
+
+    if (name) {
+      query.name = { $regex: name, $options: 'i' };
+    }
+
+    if (category) {
+      query.category = category;
+    }
+
+    // Use the query object to find matching tours in your database
+    const tours = await Tour.find(query);
+
+    res.status(200).json({
+      status: 'success',
+      results: tours.length,
+      data: {
+        tours,
+      },
+    });
+  }  catch (err) {
+    res.status(500).json({
+      status: 'error',
+      message: `Error: ${err.message}`,
+    });
+  }
+  
+  
+};
